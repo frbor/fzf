@@ -3,7 +3,7 @@ function __fzf_complete_preview -d 'generate preview for completion widget.
     argv[2] is a string containing the rest of the output produced by `complete -Ccmd`
     '
 
-    if test "$argv[2]" = "Redefine variable"
+    if test (count $argv) -gt 1; and "$argv[2]" = "Redefine variable"
         # show environment variables current value
         set -l evar (echo $argv[1] | cut -d= -f1)
         echo $argv[1]$$evar
@@ -24,6 +24,8 @@ function __fzf_complete_preview -d 'generate preview for completion widget.
     # if fish knows about it, let it show info
     type -q "$argv[1]" 2>/dev/null; and type -a "$argv[1]"
 
+    if test (count $argv) -gt 1
     # show aditional data
-    echo $argv[2]
+        echo $argv[2]
+     end
 end
